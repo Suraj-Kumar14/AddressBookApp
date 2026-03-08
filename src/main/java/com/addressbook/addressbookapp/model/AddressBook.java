@@ -9,7 +9,7 @@ public class AddressBook {
 		return contactList;
 	}
 
- 
+	//add contact
     public void addContact(Contact contact) {
 
         boolean duplicate = contactList.stream()
@@ -44,6 +44,7 @@ public class AddressBook {
 		}
 	}
 		
+	//find contact by name
 	public boolean findByName(String name) {
 		for(Contact c : contactList) {
 			if(c.getFirstName().equalsIgnoreCase(name)) {
@@ -53,7 +54,7 @@ public class AddressBook {
 		return false;
 	}
 	
-   
+	//delete contact by name
 	public void deleteContactByName(String name) {
 		Contact removeContact = null;
 		for(Contact c : contactList) {
@@ -71,6 +72,7 @@ public class AddressBook {
 		}
 	}
 	
+	//duplicate check method
 	public boolean duplicateCheck(Contact contact) {
 		for(Contact c : contactList) {
 			if(c.equals(contact)) {
@@ -80,6 +82,7 @@ public class AddressBook {
 		return false;
 	}
 	
+	//get all contacts
 	public void getAllContact() {
 		if(contactList.isEmpty()) {
 			System.out.println("contact list is empty!");
@@ -90,7 +93,7 @@ public class AddressBook {
 		}
 	}
 
-
+	//search person by city
 	public void searchPerson(String name, String city) {
 		contactList.stream().filter(x-> {
 			if((x.getFirstName()+" "+x.getLastName()).equalsIgnoreCase(name) && (x.getCity().equalsIgnoreCase(city))){
@@ -102,17 +105,24 @@ public class AddressBook {
 		}).forEach(System.out::println);
 	}
 	
+	//view contact by state
 	public void viewByState(String state) {
 		contactList
 			.stream()
 			.filter(x-> x.getState().equalsIgnoreCase(state)).forEach(System.out::println);
 	}
 
+	//count number in city
 	public void countNumberByCity(String city) {
 		if(contactList.isEmpty()) {
 			System.out.println("contact list is empty!");
 			return;
 		}
 		System.out.println(contactList.stream().filter(x-> x.getCity().equalsIgnoreCase(city)).collect(Collectors.counting()));
+	}
+	
+	//sort by name
+	public void sortByName() {
+		contactList.stream().sorted(Comparator.comparing(Contact::getFirstName)).toList().forEach(System.out::println);
 	}
 }
