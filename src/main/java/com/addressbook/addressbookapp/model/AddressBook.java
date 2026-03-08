@@ -1,6 +1,7 @@
 package com.addressbook.addressbookapp.model;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressBook {
 	List<Contact> contactList = new ArrayList<>();
@@ -107,4 +108,11 @@ public class AddressBook {
 			.filter(x-> x.getState().equalsIgnoreCase(state)).forEach(System.out::println);
 	}
 
+	public void countNumberByCity(String city) {
+		if(contactList.isEmpty()) {
+			System.out.println("contact list is empty!");
+			return;
+		}
+		System.out.println(contactList.stream().filter(x-> x.getCity().equalsIgnoreCase(city)).collect(Collectors.counting()));
+	}
 }
