@@ -13,22 +13,23 @@ public class AddressBookMain {
 		AddressBook addressBook = new AddressBook();
 		while(true) {
 			System.out.println("\n--------------------Address Book System App--------------------");
-			System.out.println("Add Contact -> Enter '1': ");
-			System.out.println("Update Contact -> Enter '2': ");
-			System.out.println("Delete Contact -> Enter '3': ");
-			System.out.println("View All Contact -> Enter '4': ");
-			System.out.println("Exit -> Enter '0': ");
+			System.out.println("1. Add Contact");
+			System.out.println("2. Update Contact");
+			System.out.println("3. Delete Contact");
+			System.out.println("4. View All Contact");
+			System.out.println("5. Search person by city");
+			System.out.println("0. Exit");
 			System.out.println("--------------------------------------------------");
 			
-			int choise = sc.nextInt();
+			int choice = sc.nextInt();
 			sc.nextLine();
 			
-			if(choise==0) {
+			if(choice==0) {
 				System.out.println("Thanks for using our services!");
 				break;
 			}
 			
-			switch(choise) {
+			switch(choice) {
 				case 1:
 					System.out.println("--Welcome to Address Book Program--");
 					System.out.println("Enter AddressBook name: ");
@@ -66,6 +67,12 @@ public class AddressBookMain {
 				case 4: 
 					addressBook.getAllContact();
 					break;
+				case 5:
+					System.out.println("Enter person first name and last name");
+					String name = sc.nextLine();
+					System.out.println("Enter city name to search: ");
+					String city = sc.nextLine();
+					addressBook.searchPerson(name, city);
 				default:
 					System.out.println("Invalid choise!");
 			}
