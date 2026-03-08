@@ -85,4 +85,18 @@ public class Contact {
 				+ address + ", city=" + city + ", state=" + state + ", zip=" + zip + ", phoneNumber=" + phoneNumber
 				+ ", email=" + email + "]";
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj==this) {
+			return true;
+		}
+		
+		if(obj==null || obj.getClass()!=this.getClass()) {
+			return false;
+		}
+		
+		Contact other = (Contact)obj;
+		return firstName.equalsIgnoreCase(other.firstName) && lastName.equalsIgnoreCase(other.lastName);
+	}
 }
