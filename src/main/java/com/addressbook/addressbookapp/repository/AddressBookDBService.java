@@ -47,7 +47,33 @@ public class AddressBookDBService {
         } catch(Exception e) {
             e.printStackTrace();
         }
-
         return list;
+    }
+    
+    // UC17
+    public boolean updateContact(String name, String address, String city, String state, String zip, String phone, String email) {
+        String query = "UPDATE contacts SET address=?, city=?, state=?, zip=?, phone=?, email=? WHERE first_name=?";
+
+        try(Connection con = getConnection()) {
+
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setString(1, address);
+            ps.setString(2, city);
+            ps.setString(3, state);
+            ps.setString(4, zip);
+            ps.setString(5, phone);
+            ps.setString(6, email);
+            ps.setString(7, name);
+
+            int result = ps.executeUpdate();
+
+            return result > 0;
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }
