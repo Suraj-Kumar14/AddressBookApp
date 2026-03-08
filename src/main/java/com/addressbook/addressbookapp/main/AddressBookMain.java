@@ -35,6 +35,7 @@ public class AddressBookMain {
 			System.out.println("12. Read Contact from JSON file");
 			System.out.println("13. Retrieve Contacts From Database");
 			System.out.println("14. Update Contact In Database");
+			System.out.println("15. Retrieve Contacts by Date Range");
 			System.out.println("0. Exit");
 			System.out.println("--------------------------------------------------");
 			
@@ -194,6 +195,17 @@ public class AddressBookMain {
 				    else
 				        System.out.println("Contact Not Found in DB");
 				    break;
+				    
+				 case 15:
+					    System.out.println("Enter start date (YYYY-MM-DD):");
+					    String start = sc.nextLine();
+
+					    System.out.println("Enter end date (YYYY-MM-DD):");
+					    String end = sc.nextLine();
+
+					    List<Contact> list = dbService.getContactsByDateRange(start, end);
+					    list.forEach(System.out::println);
+					break;
 					
 				default:
 					System.out.println("Invalid choise!");
