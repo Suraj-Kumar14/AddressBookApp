@@ -88,4 +88,16 @@ public class AddressBook {
 			System.out.println(c);
 		}
 	}
+
+
+	public void searchPerson(String name, String city) {
+		contactList.stream().filter(x-> {
+			if((x.getFirstName()+" "+x.getLastName()).equalsIgnoreCase(name) && (x.getCity().equalsIgnoreCase(city))){
+				return true;
+			}
+			else {
+				return false;
+			}
+		}).forEach(System.out::println);
+	}
 }
