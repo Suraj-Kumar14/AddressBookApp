@@ -38,6 +38,7 @@ public class AddressBookMain {
 			System.out.println("15. Retrieve Contacts by Date Range");
 			System.out.println("16. Count Contacts by City");
 			System.out.println("17. Count Contacts by State");
+			System.out.println("18. Add Contact to Database");
 			System.out.println("0. Exit");
 			System.out.println("--------------------------------------------------");
 			
@@ -224,6 +225,16 @@ public class AddressBookMain {
 					    System.out.println("Total Contacts in state: " + countState);
 					    break;
 					
+				 case 18:
+					    Contact contact = takeInput();
+					    boolean added = dbService.addContact(contact);
+					   
+					    if(added)
+					        System.out.println("Contact added successfully in DB");
+					    else
+					        System.out.println("Failed to add contact");
+					    break;
+					    
 				default:
 					System.out.println("Invalid choise!");
 			}
