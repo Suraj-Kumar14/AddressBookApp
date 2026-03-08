@@ -34,6 +34,7 @@ public class AddressBookMain {
 			System.out.println("11. Read Contact From CSV File");
 			System.out.println("12. Read Contact from JSON file");
 			System.out.println("13. Retrieve Contacts From Database");
+			System.out.println("14. Update Contact In Database");
 			System.out.println("0. Exit");
 			System.out.println("--------------------------------------------------");
 			
@@ -154,6 +155,44 @@ public class AddressBookMain {
 				        contactList.forEach(System.out::println);
 				    }
 
+				    break;
+				    
+				 case 14:
+				    System.out.println("Enter first name:");
+				    String nameDB = sc.nextLine();
+
+				    System.out.println("Enter new address:");
+				    String addressDB = sc.nextLine();
+
+				    System.out.println("Enter new city:");
+				    String cityDB = sc.nextLine();
+
+				    System.out.println("Enter new state:");
+				    String stateDB = sc.nextLine();
+
+				    System.out.println("Enter new zip:");
+				    String zipDB = sc.nextLine();
+
+				    System.out.println("Enter new phone number:");
+				    String phoneDB = sc.nextLine();
+
+				    System.out.println("Enter new email:");
+				    String emailDB = sc.nextLine();
+
+				    boolean updated = dbService.updateContact(
+				            nameDB,
+				            addressDB,
+				            cityDB,
+				            stateDB,
+				            zipDB,
+				            phoneDB,
+				            emailDB
+				    );
+
+				    if(updated)
+				        System.out.println("Contact Updated Successfully in DB");
+				    else
+				        System.out.println("Contact Not Found in DB");
 				    break;
 					
 				default:
