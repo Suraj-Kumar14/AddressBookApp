@@ -36,11 +36,14 @@ public class AddressBookMain {
 			System.out.println("13. Retrieve Contacts From Database");
 			System.out.println("14. Update Contact In Database");
 			System.out.println("15. Retrieve Contacts by Date Range");
+			System.out.println("16. Count Contacts by City");
+			System.out.println("17. Count Contacts by State");
 			System.out.println("0. Exit");
 			System.out.println("--------------------------------------------------");
 			
 			int choice = sc.nextInt();
 			sc.nextLine();
+			String city;
 			
 			if(choice==0) {
 				System.out.println("Thanks for using our services!");
@@ -94,7 +97,7 @@ public class AddressBookMain {
 					System.out.println("Enter person first name and last name");
 					String name = sc.nextLine();
 					System.out.println("Enter city name to search: ");
-					String city = sc.nextLine();
+					city= sc.nextLine();
 					addressBook.searchPerson(name, city);
 					break;
 					
@@ -205,7 +208,21 @@ public class AddressBookMain {
 
 					    List<Contact> list = dbService.getContactsByDateRange(start, end);
 					    list.forEach(System.out::println);
-					break;
+					    break;
+					
+				 case 16:
+					    System.out.println("Enter city:");
+					    city = sc.nextLine();
+					    int countCity = dbService.getContactCountByCity(city);
+					    System.out.println("Total Contacts in city: " + countCity);
+					    break;
+				
+				 case 17:
+					    System.out.println("Enter state:");
+					    String state = sc.nextLine();
+					    int countState = dbService.getContactCountByState(state);
+					    System.out.println("Total Contacts in state: " + countState);
+					    break;
 					
 				default:
 					System.out.println("Invalid choise!");
