@@ -149,4 +149,31 @@ public class AddressBookDBService {
         }
         return 0;
     }
+    
+    public boolean addContact(Contact contact) {
+        String query = "INSERT INTO contacts(first_name,last_name,address,city,state,zip,phone,email,date_added) VALUES(?,?,?,?,?,?,?,?,?)";
+        try(Connection con = getConnection()) {
+
+            con.setAutoCommit(false); // Start transaction
+
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setString(1, contact.getFirstName());
+            ps.setString(2, contact.getLastName());
+            ps.setString(3, contact.getAddress());
+            ps.setString(4, contact.getCity());
+            ps.setString(5, contact.getState());
+            ps.setString(6, contact.getZip());
+            ps.setString(7, contact.getPhoneNumber());
+            ps.setString(8, contact.getEmail());
+            ps.setDate(9, new java.sql.Date(System.currentTimeMillis()));
+
+            ps.executeUpdate();
+            con.commit(); // commit transaction
+            return true;
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
