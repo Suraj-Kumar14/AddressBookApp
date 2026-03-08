@@ -5,12 +5,23 @@ import com.addressbook.addressbookapp.model.AddressBook;
 import com.addressbook.addressbookapp.model.Contact;
 
 public class AddressBookMain {
-
+	static Scanner sc = new Scanner(System.in);
+	static AddressBook addressBook = new AddressBook();
 	public static void main(String[] args) {
-		AddressBook addressBook = new AddressBook();
+		addressBook.addContact(takeInput());
 		
-		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter first name to edit contact: ");
+		String updateName = sc.nextLine();
 		
+		if(!addressBook.findByName(updateName)) {
+			System.out.println("First name not found!");
+			return;
+		}
+		
+		addressBook.editContactByName(updateName, takeInput());
+	}
+	
+	public static Contact takeInput() {
 		System.out.println("Enter first name: ");
 		String firstName = sc.nextLine();
 		
@@ -36,7 +47,6 @@ public class AddressBookMain {
 		System.out.println("Enter email: ");
 		String email = sc.nextLine();
 		
-		addressBook.addContact(new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email));
-		sc.close();
+		return new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email);
 	}
 }
