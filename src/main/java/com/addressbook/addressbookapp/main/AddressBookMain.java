@@ -1,4 +1,8 @@
 package com.addressbook.addressbookapp.main;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 import com.addressbook.addressbookapp.model.AddressBook;
@@ -22,6 +26,7 @@ public class AddressBookMain {
 			System.out.println("7. Count Contact by city");
 			System.out.println("8. Sort Contact by name");
 			System.out.println("9. Sort Contact by ZIP");
+			System.out.println("10. Read Contact From File");
 			System.out.println("0. Exit");
 			System.out.println("--------------------------------------------------");
 			
@@ -88,12 +93,13 @@ public class AddressBookMain {
 					System.out.println("Enter the state name: ");
 					String statemName = sc.nextLine();
 					addressBook.viewByState(statemName);
-					
+					break;
 					
 				case 7:
 					System.out.println("Enter city name: ");
 					String cityName = sc.next();
 					addressBook.countNumberByCity(cityName);
+					break;
 					
 				case 8:
 					addressBook = chooseAddressBook();
@@ -103,7 +109,19 @@ public class AddressBookMain {
 				case 9:
 					addressBook = chooseAddressBook();
 					addressBook.sortByZIP();
+					break;
 	
+				case 10:
+					System.out.println("Enter AddressBook name: ");
+			        String bookNames = sc.nextLine();
+					if(!system.exists(bookNames)) {
+			            system.addAddressBook(bookNames);
+			        }
+					
+			        addressBook = system.getAddressBook(bookNames);
+					readContactFromFile(addressBook);
+					break;
+
 				default:
 					System.out.println("Invalid choise!");
 			}
@@ -163,5 +181,23 @@ public class AddressBookMain {
 			}
 		}
 		return book;
+	}
+	
+	public static void readContactFromFile(AddressBook addressBook) {
+		try (BufferedReader read = new BufferedReader(new InputStreamReader(new FileInputStream("dataFiles/contacts.txt")))) {
+			String line;
+			while((line = read.readLine())!=null) {
+				String data[] = line.split(",");
+				if(data.length==8) {
+					addressBook.addContact(new Contact(data[0],data[1],data[2],data[3],data[4],data[5],data[6], data[7]));
+				}else {
+					System.out.println("Contact data not correct format in file!");
+					return;
+				}
+			}
+		}
+		catch(IOException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }
