@@ -14,7 +14,7 @@ public class Contact {
 	private String email;
 	
 	public Contact(String firstName, String lastName, String address, String city, String state, String zip, String phoneNumber, String email) {
-		this.userId = ++counter;
+		this.userId = counter++;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
@@ -23,6 +23,18 @@ public class Contact {
 		this.zip = zip;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
+	}
+	
+	public Contact(long userId,String firstName,String lastName,String address,String city,String state,String zip,String phoneNumber,String email){
+	    this.userId = userId;
+	    this.firstName = firstName;
+	    this.lastName = lastName;
+	    this.address = address;
+	    this.city = city;
+	    this.state = state;
+	    this.zip = zip;
+	    this.phoneNumber = phoneNumber;
+	    this.email = email;
 	}
 	
 	public long getUserId() {
@@ -88,15 +100,22 @@ public class Contact {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if(obj==this) {
-			return true;
-		}
-		
-		if(obj==null || obj.getClass()!=this.getClass()) {
-			return false;
-		}
-		
-		Contact other = (Contact)obj;
-		return firstName.equalsIgnoreCase(other.firstName) && lastName.equalsIgnoreCase(other.lastName);
+	    if(obj == this) {
+	        return true;
+	    }
+
+	    if(obj == null || obj.getClass() != this.getClass()) {
+	        return false;
+	    }
+
+	    Contact other = (Contact) obj;
+
+	    return firstName.equalsIgnoreCase(other.firstName)
+	            && lastName.equalsIgnoreCase(other.lastName);
+	}
+
+	@Override
+	public int hashCode() {
+	    return java.util.Objects.hash(firstName.toLowerCase(), lastName.toLowerCase());
 	}
 }
