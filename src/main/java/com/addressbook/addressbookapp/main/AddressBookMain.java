@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+import com.addressbook.addressbookapp.io.JsonFileService;
 import com.addressbook.addressbookapp.model.AddressBook;
 import com.addressbook.addressbookapp.model.AddressBookSystem;
 import com.addressbook.addressbookapp.model.Contact;
@@ -12,6 +13,7 @@ import com.addressbook.addressbookapp.model.Contact;
 public class AddressBookMain {
 	static Scanner sc = new Scanner(System.in);
 	static AddressBookSystem system = new AddressBookSystem();
+	static JsonFileService jsonService = new JsonFileService();
 	
 	public static void main(String[] args) {
 		AddressBook addressBook = new AddressBook();
@@ -28,6 +30,7 @@ public class AddressBookMain {
 			System.out.println("9. Sort Contact by ZIP");
 			System.out.println("10. Read Contact From File");
 			System.out.println("11. Read Contact From CSV File");
+			System.out.println("12. Read Contact from JSON file");
 			System.out.println("0. Exit");
 			System.out.println("--------------------------------------------------");
 			
@@ -134,7 +137,11 @@ public class AddressBookMain {
 			        readContactFromFile(addressBook, "dataFiles/contacts.csv");
 			        break;
 			        
-			        
+				case 12:
+					List<Contact> contacts = jsonService.readContacts();
+					System.out.println(contacts);
+					break;
+					
 				default:
 					System.out.println("Invalid choise!");
 			}
