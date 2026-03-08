@@ -9,11 +9,13 @@ import com.addressbook.addressbookapp.io.JsonFileService;
 import com.addressbook.addressbookapp.model.AddressBook;
 import com.addressbook.addressbookapp.model.AddressBookSystem;
 import com.addressbook.addressbookapp.model.Contact;
+import com.addressbook.addressbookapp.repository.AddressBookDBService;
 
 public class AddressBookMain {
 	static Scanner sc = new Scanner(System.in);
 	static AddressBookSystem system = new AddressBookSystem();
 	static JsonFileService jsonService = new JsonFileService();
+	static AddressBookDBService dbService = new AddressBookDBService();
 	
 	public static void main(String[] args) {
 		AddressBook addressBook = new AddressBook();
@@ -31,6 +33,7 @@ public class AddressBookMain {
 			System.out.println("10. Read Contact From File");
 			System.out.println("11. Read Contact From CSV File");
 			System.out.println("12. Read Contact from JSON file");
+			System.out.println("13. Retrieve Contacts From Database");
 			System.out.println("0. Exit");
 			System.out.println("--------------------------------------------------");
 			
@@ -141,6 +144,17 @@ public class AddressBookMain {
 					List<Contact> contacts = jsonService.readContacts();
 					System.out.println(contacts);
 					break;
+					
+				case 13:
+				    List<Contact> contactList = dbService.getAllContacts();
+
+				    if(contactList.isEmpty()) {
+				        System.out.println("No contacts found in DB");
+				    } else {
+				        contactList.forEach(System.out::println);
+				    }
+
+				    break;
 					
 				default:
 					System.out.println("Invalid choise!");
