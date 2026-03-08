@@ -3,12 +3,14 @@ package com.addressbook.addressbookapp.main;
 import java.util.*;
 
 import com.addressbook.addressbookapp.model.AddressBook;
+import com.addressbook.addressbookapp.model.AddressBookSystem;
 import com.addressbook.addressbookapp.model.Contact;
 
 public class AddressBookMain {
 
     static Scanner sc = new Scanner(System.in);
     static AddressBook addressBook = new AddressBook();
+    static AddressBookSystem system = new AddressBookSystem();
 
     public static void main(String[] args) {
 
@@ -18,7 +20,8 @@ public class AddressBookMain {
             System.out.println("1. Add Contact");
             System.out.println("2. Edit Contact");
             System.out.println("3. Delete Contact");
-            System.out.println("4. Exit");
+            System.out.println("4. Add AddressBook");
+            System.out.println("5. Exit");
             System.out.println("Enter your choice: ");
 
             int choice = sc.nextInt();
@@ -54,7 +57,16 @@ public class AddressBookMain {
                     }
                     break;
 
-                case 4:
+                case 4: 
+                    System.out.println("Enter AddressBook name: ");
+                    String bookName = sc.nextLine();
+
+                    system.addAddressBook(bookName);
+
+                    AddressBook addressBook = system.getAddressBook(bookName);
+
+                    
+                case 5:
                     System.out.println("Exiting Address Book...");
                     System.exit(0);
 
