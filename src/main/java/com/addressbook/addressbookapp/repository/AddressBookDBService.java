@@ -176,4 +176,24 @@ public class AddressBookDBService {
         }
         return false;
     }
+    
+    public void addMultipleContacts(List<Contact> contacts) {
+        contacts.forEach(contact -> {
+            Runnable task = () -> {
+                System.out.println("Thread Started: " + contact.getFirstName());
+
+                boolean added = addContact(contact);
+
+                if(added)
+                    System.out.println(contact.getFirstName() + " added successfully");
+                else
+                    System.out.println("Failed to add " + contact.getFirstName());
+
+                System.out.println("Thread Ended: " + contact.getFirstName());
+            };
+            Thread thread = new Thread(task);
+            thread.start();
+
+        });
+    }
 }
