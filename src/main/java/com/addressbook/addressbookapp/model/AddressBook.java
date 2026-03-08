@@ -125,4 +125,9 @@ public class AddressBook {
 	public void sortByName() {
 		contactList.stream().sorted(Comparator.comparing(Contact::getFirstName)).toList().forEach(System.out::println);
 	}
+	
+	//sort by ZIP
+	public void sortByZIP() {
+		contactList.stream().sorted(Comparator.comparing(Contact::getZip)).toList().forEach(System.out::println);
+	}
 }
