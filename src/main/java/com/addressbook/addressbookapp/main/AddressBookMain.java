@@ -14,11 +14,21 @@ public class AddressBookMain {
 		String updateName = sc.nextLine();
 		
 		if(!addressBook.findByName(updateName)) {
-			System.out.println("First name not found!");
+			System.out.println("First name not found! so we can't update!");
 			return;
 		}
 		
 		addressBook.editContactByName(updateName, takeInput());
+		
+		System.out.println("Enter first name to delete contact: ");
+		String deleteName = sc.nextLine();
+		
+		if(!addressBook.findByName(deleteName)) {
+			System.out.println("First name not found! so we can't delete");
+			return;
+		}
+		
+		addressBook.deleteContactByName(deleteName);		
 	}
 	
 	public static Contact takeInput() {
