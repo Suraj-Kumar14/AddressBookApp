@@ -38,4 +38,13 @@ public class AddressBook {
 		}
 		return false;
 	}
+	
+	public void deleteContactByName(String name) {
+		for(Contact c : contactList) {
+			if(c.getFirstName().equalsIgnoreCase(name)) {
+				contactList.remove(c);
+				return;
+			}
+		}
+	}
 }
