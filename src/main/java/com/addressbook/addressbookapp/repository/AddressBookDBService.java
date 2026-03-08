@@ -115,4 +115,38 @@ public class AddressBookDBService {
 
         return list;
     }
+    
+    public int getContactCountByCity(String city) {
+        String query = "SELECT getContactsByCity(?)";
+
+        try(Connection con = getConnection()) {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, city);
+
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
+    public int getContactCountByState(String state) {
+        String query = "SELECT getContactsByState(?)";
+        try(Connection con = getConnection()) {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, state);
+
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }
