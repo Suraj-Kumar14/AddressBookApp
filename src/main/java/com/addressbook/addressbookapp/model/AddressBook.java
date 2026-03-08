@@ -4,7 +4,10 @@ import java.util.*;
 
 public class AddressBook {
 	List<Contact> contactList = new ArrayList<>();
-	
+	public List<Contact> getContactList() {
+		return contactList;
+	}
+
  
     public void addContact(Contact contact) {
 
@@ -67,4 +70,22 @@ public class AddressBook {
 		}
 	}
 	
+	public boolean duplicateCheck(Contact contact) {
+		for(Contact c : contactList) {
+			if(c.equals(contact)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void getAllContact() {
+		if(contactList.isEmpty()) {
+			System.out.println("contact list is empty!");
+			return;
+		}
+		for(Contact c : contactList) {
+			System.out.println(c);
+		}
+	}
 }
