@@ -18,6 +18,7 @@ public class AddressBookMain {
 			System.out.println("3. Delete Contact");
 			System.out.println("4. View All Contact");
 			System.out.println("5. Search person by city");
+			System.out.println("6. Search person by state");
 			System.out.println("0. Exit");
 			System.out.println("--------------------------------------------------");
 			
@@ -30,6 +31,7 @@ public class AddressBookMain {
 			}
 			
 			switch(choice) {
+			
 				case 1:
 					System.out.println("--Welcome to Address Book Program--");
 					System.out.println("Enter AddressBook name: ");
@@ -42,6 +44,7 @@ public class AddressBookMain {
 			        // Add contact
 			        addressBook.addContact(takeInput());
 					break;
+					
 				case 2:
 					System.out.println("Enter first name to edit contact: ");
 					String updateName = sc.nextLine();
@@ -53,6 +56,7 @@ public class AddressBookMain {
 						addressBook.editContactByName(updateName, takeInput());
 					}
 					break;
+					
 				case 3:
 					System.out.println("Enter first name to delete contact : ");
 					String deleteName = sc.nextLine();
@@ -64,15 +68,24 @@ public class AddressBookMain {
 						addressBook.deleteContactByName(deleteName);		
 					}
 					break;
+					
 				case 4: 
 					addressBook.getAllContact();
 					break;
+					
 				case 5:
 					System.out.println("Enter person first name and last name");
 					String name = sc.nextLine();
 					System.out.println("Enter city name to search: ");
 					String city = sc.nextLine();
 					addressBook.searchPerson(name, city);
+					break;
+					
+				case 6:
+					System.out.println("Enter the state name: ");
+					String statemName = sc.nextLine();
+					addressBook.viewByState(statemName);
+					
 				default:
 					System.out.println("Invalid choise!");
 			}
