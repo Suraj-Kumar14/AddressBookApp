@@ -1,16 +1,27 @@
 package com.addressbook.addressbookapp.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class AddressBook {
 	List<Contact> contactList = new ArrayList<>();
 	
-	//add contact
-	public void addContact(Contact contact) {
-		contactList.add(contact);
-	}
+ 
+    public void addContact(Contact contact) {
+
+        boolean duplicate = contactList.stream()
+                .anyMatch(c -> c.equals(contact));
+
+        if (duplicate) {
+            System.out.println("Duplicate Contact Found!");
+            return;
+        }
+
+        contactList.add(contact);
+        System.out.println("Contact Added Successfully");
+    }
+
 	
+  
 	//editContactByName
 	public void editContactByName(String name, Contact contact) {
 		for(Contact c : contactList) {
@@ -23,11 +34,10 @@ public class AddressBook {
 				c.setZip(contact.getZip());
 				c.setPhoneNumber(contact.getPhoneNumber());
 				c.setEmail(contact.getEmail());
-				System.out.println("contact udpated");
+				System.out.println("contact udpated.");
 				return;
 			}
 		}
-			System.out.println("contact not found by name: "+name);
 	}
 		
 	public boolean findByName(String name) {
@@ -39,12 +49,22 @@ public class AddressBook {
 		return false;
 	}
 	
+   
 	public void deleteContactByName(String name) {
+		Contact removeContact = null;
 		for(Contact c : contactList) {
 			if(c.getFirstName().equalsIgnoreCase(name)) {
-				contactList.remove(c);
-				return;
+				removeContact = c;
+				break;
 			}
 		}
+		if(removeContact!=null) {
+			contactList.remove(removeContact);
+			System.out.println("contact deleted!");
+			return;
+		}else {
+			System.out.println("contact not found by name!");
+		}
 	}
+	
 }
