@@ -1,3 +1,3 @@
 # AddressBookApp
 
-#This is about AddressBookApp in dev branch
+This is about AddressBookApp in feature/UC2-add-contact branch
