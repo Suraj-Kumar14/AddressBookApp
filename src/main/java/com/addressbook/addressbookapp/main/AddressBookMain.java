@@ -39,6 +39,7 @@ public class AddressBookMain {
 			System.out.println("16. Count Contacts by City");
 			System.out.println("17. Count Contacts by State");
 			System.out.println("18. Add Contact to Database");
+			System.out.println("19 Add Multiple Contacts Using Threads");
 			System.out.println("0. Exit");
 			System.out.println("--------------------------------------------------");
 			
@@ -235,6 +236,19 @@ public class AddressBookMain {
 					        System.out.println("Failed to add contact");
 					    break;
 					    
+				 case 19:
+					    List<Contact> contacts1 = new ArrayList<>();
+					    System.out.println("How many contacts you want to add?");
+					    int n = sc.nextInt();
+					    sc.nextLine();
+
+					    for(int i=0;i<n;i++) {
+					        System.out.println("Enter details for contact " + (i+1));
+					        contacts1.add(takeInput());
+					    }
+					    dbService.addMultipleContacts(contacts1);
+					    break;
+					
 				default:
 					System.out.println("Invalid choise!");
 			}
