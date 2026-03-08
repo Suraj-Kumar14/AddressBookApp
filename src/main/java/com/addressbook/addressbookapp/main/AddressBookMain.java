@@ -19,6 +19,7 @@ public class AddressBookMain {
 			System.out.println("4. View All Contact");
 			System.out.println("5. Search person by city");
 			System.out.println("6. Search person by state");
+			System.out.println("7. Count Contact by city");
 			System.out.println("0. Exit");
 			System.out.println("--------------------------------------------------");
 			
@@ -85,6 +86,13 @@ public class AddressBookMain {
 					System.out.println("Enter the state name: ");
 					String statemName = sc.nextLine();
 					addressBook.viewByState(statemName);
+					
+					
+				case 7:
+					System.out.println("Enter city name: ");
+					String cityName = sc.next();
+					addressBook.countNumberByCity(cityName);
+					
 					
 				default:
 					System.out.println("Invalid choise!");
