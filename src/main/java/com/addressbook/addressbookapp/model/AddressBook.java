@@ -100,4 +100,11 @@ public class AddressBook {
 			}
 		}).forEach(System.out::println);
 	}
+	
+	public void viewByState(String state) {
+		contactList
+			.stream()
+			.filter(x-> x.getState().equalsIgnoreCase(state)).forEach(System.out::println);
+	}
+
 }
