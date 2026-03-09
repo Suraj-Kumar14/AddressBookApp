@@ -1,30 +1,17 @@
 package com.addressbook.addressbookapp.model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-public class AddressBookSystem {
-	Map<String, AddressBook> addressbooksystem = new HashMap<>();
+public class AddressBookService {
+	private List<Contact>addressBookMemory = new ArrayList<>();
 	
-	public void addAddressBook(String name) {
-		if(addressbooksystem.containsKey(name)) {
-			System.out.println("Address book already exist!");
-			return;
-		}
-		
-		addressbooksystem.put(name, new AddressBook());
+	public void updateMemory(List<Contact>contacts) {
+		addressBookMemory.addAll(contacts);
 	}
 	
-	public boolean exists(String name) {
-	    return addressbooksystem.containsKey(name);
+	public List<Contact> getContacts(){
+		return addressBookMemory;
 	}
 	
-	public AddressBook getAddressBook(String name) {
-		return addressbooksystem.get(name);
-	}
-	
-	public void listAllAddressBooks() {
-		addressbooksystem.keySet().forEach(System.out::println);
-	}
 }
