@@ -62,4 +62,43 @@ public class AddressBookJsonServerTest {
 		 System.out.println("Contact in memory");
 		 addressBookMemory.forEach(System.out::println);
 	}
+	
+	@Test
+    public void updateContact() {
+
+        int contactId = 2;
+
+        Contact updatedContact =
+                new Contact(
+                        "Rahul",
+                        "Sharma",
+                        "addr2",
+                        "Mumbai",
+                        "MH",
+                        "400001",
+                        "9992223333",
+                        "rahul@gmail.com");
+
+        Contact responseContact =
+                given()
+                    .contentType(ContentType.JSON)
+                    .body(updatedContact)
+                .when()
+                    .put("http://localhost:3000/contacts/" + contactId)
+                .then()
+                    .statusCode(200)
+                    .extract()
+                    .as(Contact.class);
+
+        for(int i = 0; i < addressBookMemory.size(); i++) {
+
+            if(addressBookMemory.get(i).getUserId() == contactId) {
+                addressBookMemory.set(i, responseContact);
+                break;
+            }
+        }
+
+        System.out.println("Updated Memory:");
+        addressBookMemory.forEach(System.out::println);
+    }
 }
