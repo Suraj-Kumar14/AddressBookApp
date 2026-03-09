@@ -1,51 +1,25 @@
 package com.addressbook.addressbookapp.main;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
 
-import com.addressbook.addressbookapp.io.JsonFileService;
-import com.addressbook.addressbookapp.model.AddressBook;
-import com.addressbook.addressbookapp.model.AddressBookSystem;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import com.addressbook.addressbookapp.database.SQLQuery;
 import com.addressbook.addressbookapp.model.Contact;
-import com.addressbook.addressbookapp.repository.AddressBookDBService;
 
 public class AddressBookMain {
-	static Scanner sc = new Scanner(System.in);
-	static AddressBookSystem system = new AddressBookSystem();
-	static JsonFileService jsonService = new JsonFileService();
-	static AddressBookDBService dbService = new AddressBookDBService();
+	static Scanner sc = new Scanner(System.in);	
 	
 	public static void main(String[] args) {
-		AddressBook addressBook = new AddressBook();
+		SQLQuery query=new SQLQuery();
+		
 		while(true) {
-			System.out.println("\n--------------------Address Book System App--------------------");
+			System.out.println("==========Address Book System App===========");
 			System.out.println("1. Add Contact");
-			System.out.println("2. Update Contact");
-			System.out.println("3. Delete Contact");
-			System.out.println("4. View All Contact");
-			System.out.println("5. Search person by city");
-			System.out.println("6. Search person by state");
-			System.out.println("7. Count Contact by city");
-			System.out.println("8. Sort Contact by name");
-			System.out.println("9. Sort Contact by ZIP");
-			System.out.println("10. Read Contact From File");
-			System.out.println("11. Read Contact From CSV File");
-			System.out.println("12. Read Contact from JSON file");
-			System.out.println("13. Retrieve Contacts From Database");
-			System.out.println("14. Update Contact In Database");
-			System.out.println("15. Retrieve Contacts by Date Range");
-			System.out.println("16. Count Contacts by City");
-			System.out.println("17. Count Contacts by State");
-			System.out.println("18. Add Contact to Database");
-			System.out.println("19 Add Multiple Contacts Using Threads");
+			System.out.println("2. View all contact");
 			System.out.println("0. Exit");
-			System.out.println("--------------------------------------------------");
-			
-			int choice = sc.nextInt();
-			sc.nextLine();
-			String city;
+			System.out.print("Enter choice: ");
+			int choice=sc.nextInt();
 			
 			if(choice==0) {
 				System.out.println("Thanks for using our services!");
@@ -53,278 +27,58 @@ public class AddressBookMain {
 			}
 			
 			switch(choice) {
-			
 				case 1:
-					System.out.println("--Welcome to Address Book Program--");
-					System.out.println("Enter AddressBook name: ");
-			        String bookName = sc.nextLine();
-
-			        system.addAddressBook(bookName);
-
-			        addressBook = system.getAddressBook(bookName);
-
-			        // Add contact
-			        addressBook.addContact(takeInput());
+					System.out.print("Enter how many contacts you want to add: ");
+					int n=sc.nextInt();
+					if(n<=0) {
+						System.out.println("Please Enter positive number!");
+						break;
+					}
+					query.addContact(takeInput(n));
 					break;
 					
 				case 2:
-					System.out.println("Enter first name to edit contact: ");
-					String updateName = sc.nextLine();
-					
-					if(!addressBook.findByName(updateName)) {
-						System.out.println("First name not found! so we can't update!");
-						return;
-					}else {
-						addressBook.editContactByName(updateName, takeInput());
-					}
+					query.viewAllContact();
 					break;
-					
-				case 3:
-					System.out.println("Enter first name to delete contact : ");
-					String deleteName = sc.nextLine();
-					
-					if(!addressBook.findByName(deleteName)) {
-						System.out.println("First name not found! so we can't delete");
-						return;
-					}else {
-						addressBook.deleteContactByName(deleteName);		
-					}
-					break;
-					
-				case 4: 
-					addressBook.getAllContact();
-					break;
-					
-				case 5:
-					System.out.println("Enter person first name and last name");
-					String name = sc.nextLine();
-					System.out.println("Enter city name to search: ");
-					city= sc.nextLine();
-					addressBook.searchPerson(name, city);
-					break;
-					
-				case 6:
-					System.out.println("Enter the state name: ");
-					String statemName = sc.nextLine();
-					addressBook.viewByState(statemName);
-					break;
-					
-				case 7:
-					System.out.println("Enter city name: ");
-					String cityName = sc.next();
-					addressBook.countNumberByCity(cityName);
-					break;
-					
-				case 8:
-					addressBook = chooseAddressBook();
-					addressBook.sortByName();
-					break;
-					
-				case 9:
-					addressBook = chooseAddressBook();
-					addressBook.sortByZIP();
-					break;
-	
-				case 10:
-					System.out.println("Enter AddressBook name: ");
-			        String bookNames = sc.nextLine();
-					if(!system.exists(bookNames)) {
-			            system.addAddressBook(bookNames);
-			        }
-
-			        addressBook = system.getAddressBook(bookNames);
-					readContactFromFile(addressBook,"dataFiles/contacts.txt");
-					break;
-
-				case 11:
-					System.out.println("Enter AddressBook name: ");
-			        String bookNamesCSV = sc.nextLine();
-					if(!system.exists(bookNamesCSV)) {
-			            system.addAddressBook(bookNamesCSV);
-			        }
-
-			        addressBook = system.getAddressBook(bookNamesCSV);
-			        readContactFromFile(addressBook, "dataFiles/contacts.csv");
-			        break;
-			        
-				case 12:
-					List<Contact> contacts = jsonService.readContacts();
-					System.out.println(contacts);
-					break;
-					
-				case 13:
-				    List<Contact> contactList = dbService.getAllContacts();
-
-				    if(contactList.isEmpty()) {
-				        System.out.println("No contacts found in DB");
-				    } else {
-				        contactList.forEach(System.out::println);
-				    }
-
-				    break;
-				    
-				 case 14:
-				    System.out.println("Enter first name:");
-				    String nameDB = sc.nextLine();
-
-				    System.out.println("Enter new address:");
-				    String addressDB = sc.nextLine();
-
-				    System.out.println("Enter new city:");
-				    String cityDB = sc.nextLine();
-
-				    System.out.println("Enter new state:");
-				    String stateDB = sc.nextLine();
-
-				    System.out.println("Enter new zip:");
-				    String zipDB = sc.nextLine();
-
-				    System.out.println("Enter new phone number:");
-				    String phoneDB = sc.nextLine();
-
-				    System.out.println("Enter new email:");
-				    String emailDB = sc.nextLine();
-
-				    boolean updated = dbService.updateContact(
-				            nameDB,
-				            addressDB,
-				            cityDB,
-				            stateDB,
-				            zipDB,
-				            phoneDB,
-				            emailDB
-				    );
-
-				    if(updated)
-				        System.out.println("Contact Updated Successfully in DB");
-				    else
-				        System.out.println("Contact Not Found in DB");
-				    break;
-				    
-				 case 15:
-					    System.out.println("Enter start date (YYYY-MM-DD):");
-					    String start = sc.nextLine();
-
-					    System.out.println("Enter end date (YYYY-MM-DD):");
-					    String end = sc.nextLine();
-
-					    List<Contact> list = dbService.getContactsByDateRange(start, end);
-					    list.forEach(System.out::println);
-					    break;
-					
-				 case 16:
-					    System.out.println("Enter city:");
-					    city = sc.nextLine();
-					    int countCity = dbService.getContactCountByCity(city);
-					    System.out.println("Total Contacts in city: " + countCity);
-					    break;
-				
-				 case 17:
-					    System.out.println("Enter state:");
-					    String state = sc.nextLine();
-					    int countState = dbService.getContactCountByState(state);
-					    System.out.println("Total Contacts in state: " + countState);
-					    break;
-					
-				 case 18:
-					    Contact contact = takeInput();
-					    boolean added = dbService.addContact(contact);
-					   
-					    if(added)
-					        System.out.println("Contact added successfully in DB");
-					    else
-					        System.out.println("Failed to add contact");
-					    break;
-					    
-				 case 19:
-					    List<Contact> contacts1 = new ArrayList<>();
-					    System.out.println("How many contacts you want to add?");
-					    int n = sc.nextInt();
-					    sc.nextLine();
-
-					    for(int i=0;i<n;i++) {
-					        System.out.println("Enter details for contact " + (i+1));
-					        contacts1.add(takeInput());
-					    }
-					    dbService.addMultipleContacts(contacts1);
-					    break;
 					
 				default:
-					System.out.println("Invalid choise!");
+					System.out.println("Invalid choice!");
 			}
+			
 		}
 	}
 	
-	public static Contact takeInput() {
-		System.out.println("Enter first name: ");
-		String firstName = sc.nextLine();
-		
-		
-		System.out.println("Enter last name: ");
-		String lastName = sc.nextLine();
-		
-		//check equals
-		
-		
-		System.out.println("Enter address: ");
-		String address = sc.nextLine();
-		
-		System.out.println("Enter city name: ");
-		String city = sc.nextLine();
-		
-		System.out.println("Enter state name: ");
-		String state = sc.nextLine();
-		
-		System.out.println("Enter zip: ");
-		String zip = sc.next();
-		sc.nextLine();
-		
-		System.out.println("Enter phone number: ");
-		String phoneNumber = sc.nextLine();
-		
-		System.out.println("Enter email: ");
-		String email = sc.nextLine();
-		
-		return new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email);
-	}
-	
-	public static AddressBook chooseAddressBook() {
-		System.out.println("Enter AddressBook name:");
-		String bookName = sc.nextLine();
-
-		AddressBook book = system.getAddressBook(bookName);
-		while(book==null) {
-			System.out.println("AddressBook not found! please choise these following!");
-			System.out.println("====================");
-			system.listAllAddressBooks();
-			System.out.println("====================");
-			while(true) {
-				System.out.println("\nEnter AddressBook name:");
-				String bookN = sc.nextLine();
-				book = system.getAddressBook(bookN);
-				if(bookN!=null) {
-					break;
-				}
-			}
+	public static List<Contact> takeInput(int n) {
+		List<Contact> contactList=new ArrayList<>();
+		while(n-->0)
+		{		
+			System.out.println("Enter first name: ");
+			String firstName = sc.nextLine();			
+			
+			System.out.println("Enter last name: ");
+			String lastName = sc.nextLine();				
+			
+			System.out.println("Enter address: ");
+			String address = sc.nextLine();
+			
+			System.out.println("Enter city name: ");
+			String city = sc.nextLine();
+			
+			System.out.println("Enter state name: ");
+			String state = sc.nextLine();
+			
+			System.out.println("Enter zip: ");
+			String zip = sc.next();
+			sc.nextLine();
+			
+			System.out.println("Enter phone number: ");
+			String phoneNumber = sc.nextLine();
+			
+			System.out.println("Enter email: ");
+			String email = sc.nextLine();
+			
+			contactList.add(new Contact(firstName,lastName,address,city,state,zip,phoneNumber,email));
 		}
-		return book;
-	}
-	
-	public static void readContactFromFile(AddressBook addressBook, String filePath) {
-		try (BufferedReader read = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)))) {
-			String line;
-			while((line = read.readLine())!=null) {
-				String data[] = line.split(",");
-				if(data.length==8) {
-					addressBook.addContact(new Contact(data[0],data[1],data[2],data[3],data[4],data[5],data[6], data[7]));
-				}else {
-					System.out.println("Contact data not correct format in file!");
-					return;
-				}
-			}
-		}
-		catch(IOException e) {
-			System.out.println(e.getMessage());
-		}
+		return contactList;
 	}
 }
