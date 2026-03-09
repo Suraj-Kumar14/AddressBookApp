@@ -101,4 +101,21 @@ public class AddressBookJsonServerTest {
         System.out.println("Updated Memory:");
         addressBookMemory.forEach(System.out::println);
     }
+	
+	@Test
+	public void deleteContact() {
+
+	    int contactId = 2;
+
+	    given()
+	        .when()
+	        .delete("http://localhost:3000/contacts/" + contactId)
+	        .then()
+	        .statusCode(200);
+
+	    addressBookMemory.removeIf(contact -> contact.getUserId() == contactId);
+
+	    System.out.println("Memory after deletion:");
+	    addressBookMemory.forEach(System.out::println);
+	}
 }
