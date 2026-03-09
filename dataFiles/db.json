@@ -1,0 +1,15 @@
+{
+  "contacts": [
+    {
+      "id": 1,
+      "firstName": "Suraj",
+      "lastName": "Kumar",
+      "address": "Delhi Road",
+      "city": "Delhi",
+      "state": "Delhi",
+      "zip": "110001",
+      "phone": "7854647545",
+      "email": "suraj@gmail.com"
+    }
+  ]
+}
