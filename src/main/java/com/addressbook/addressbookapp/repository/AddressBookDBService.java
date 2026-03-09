@@ -18,7 +18,6 @@ public class AddressBookDBService {
     }
     
     public List<Contact> getAllContacts() {
-
         List<Contact> list = new ArrayList<>();
 
         try(Connection con = getConnection()) {
@@ -193,7 +192,6 @@ public class AddressBookDBService {
             };
             Thread thread = new Thread(task);
             thread.start();
-
         });
     }
 }
